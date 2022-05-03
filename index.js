@@ -7,6 +7,7 @@ const cors = require('cors')
 const router = require('./routers/index')
 const path = require('path')
 const userController = require('./controllers/userController')
+const anywhereControllers = require('./controllers/anywhereControllers')
 
 const PORT = process.env.PORT || 5000
 
@@ -26,21 +27,11 @@ let osnova = 'v=5.131&access_token='+access_token
 let arr = []
 
 
-const login = async () => {
-    const {data} = await axios.post('https://api.vk.com/method/users.getSubscriptions?'+osnova+'&user_id='+(await id()).response.object_id+'&fields=user,group')
-    return data
-}
-
-const id = async () => {
-    const {data} = await axios.post('https://api.vk.com/method/utils.resolveScreenName?'+osnova+'&screen_name=mvbannikova')
-    return data
-}
-
 const start = async () => {
     try {
         //const data = await id()
-        const data = await userController.login(await userController.id())
-        console.log(data)
+       // const data = await userController.getSubscriptions(await anywhereControllers.id())
+        //console.log(data)
         //await sequelize.authenticate()
         //await sequelize.sync()
         app.listen(PORT)
