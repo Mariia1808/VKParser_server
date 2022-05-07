@@ -3,8 +3,6 @@ const router = new Router()
 
 const userRouter = require('./userRouter')
 
-router.use('http://localhost:5000/user', userRouter)
-
-
+router.use('/user', userRouter)
 
 module.exports = router
