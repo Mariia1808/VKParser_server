@@ -11,7 +11,7 @@ class CommentController {
      async getAllComments(req,res) {
         const {data} = await axios.post('https://api.vk.com/method/photos.getAllComments?'+osnova+'&owner_id=-80799846')
         console.log(data.error)
-        return data
+        return res.json(data)
     }
 }
 

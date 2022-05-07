@@ -16,13 +16,13 @@ class UserController {
     async getSubscriptions(id, req, res) {
         const {data} = await axios.post('https://api.vk.com/method/users.getSubscriptions?'+osnova+'&user_id='+id+'&fields=user,group')
         console.log(data)
-        return data
+        return res.json(data)
     }
     
     //Полная информация о пользователях
     async get(req, res) {
         const {data} = await axios.post('https://api.vk.com/method/users.get?'+osnova+'fields='+t+'user_ids=mvbannikova')
-        return data
+        return res.json(data)
     }
 
 }

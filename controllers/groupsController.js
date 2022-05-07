@@ -28,7 +28,7 @@ class GroupsController {
         }  
         //console.log(arr)
         console.log(res)
-        return arr
+        return res.json(arr)
     }
     async getById(req, res) {
         const {data} = await axios.post('https://api.vk.com/method/groups.getById?'+osnova+'&fields='+
