@@ -21,10 +21,14 @@ class UserController {
     
     //Полная информация о пользователях
     async get(req, res) {
-        const {data} = await axios.post('https://api.vk.com/method/users.get?'+osnova+'fields='+t+'user_ids=mvbannikova')
+        const {token, user_id} = req.body
+        const {data} = await axios.post('https://api.vk.com/method/users.get?v=5.131&access_token='+token+'fields='+t+'user_ids=mvbannikova')
         return res.json(data)
     }
-
+    async login(req, res) {
+        const {data} = await (await axios.post('https://oauth.vk.com/authorize?client_id=8143523&revoke=1&redirect_uri=http://localhost:3000/main&display=page&scope=friends&response_type=token'))
+        return res.json(data)
+    }
 }
 
 module.exports = new UserController()
