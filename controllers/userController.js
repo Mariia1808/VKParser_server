@@ -13,20 +13,29 @@ let t = 'activities,about,blacklisted,blacklisted_by_me,books,bdate,can_be_invit
 
 class UserController {    
     //получение подписок пользователя Сбор подписок людей
-    async getSubscriptions(id, req, res) {
-        const {data} = await axios.post('https://api.vk.com/method/users.getSubscriptions?'+osnova+'&user_id='+id+'&fields=user,group')
+    async getSubscriptions(req, res) {
+        console.log(req.params)
+        const {token, user_id} = req.params
+        console.log(token)
+        const {data} = await axios.post('https://api.vk.com/method/users.getSubscriptions?v=5.131&access_token='+token+'&user_id='+user_id+'&fields=user,group')
         console.log(data)
         return res.json(data)
     }
     
     //Полная информация о пользователях
     async get(req, res) {
-        const {token, user_id} = req.body
-        const {data} = await axios.post('https://api.vk.com/method/users.get?v=5.131&access_token='+token+'fields='+t+'user_ids=mvbannikova')
+        const {token, user_id} = req.params
+        console.log(req.params)
+        const {data} = await axios.post('https://api.vk.com/method/users.get?access_token='+token+'fields='+t+'user_id='+user_id)
         return res.json(data)
     }
+
     async login(req, res) {
-        const {data} = await (await axios.post('https://oauth.vk.com/authorize?client_id=8143523&revoke=1&redirect_uri=http://localhost:3000/main&display=page&scope=friends&response_type=token'))
+        const {code} = req.params
+        console.log(req.params)
+        console.log(code)
+        const {data} = await axios.get('https://oauth.vk.com/access_token?scope = offline&client_id=8143523&client_secret=R2fWuaiDSn7WI1CcrYa1&redirect_uri=http://localhost:3000/auth&code='+code)
+        console.log(data)
         return res.json(data)
     }
 }
