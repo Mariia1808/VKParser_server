@@ -4,6 +4,7 @@ const router = new Router()
 const userController = require('../controllers/userController')
 
 router.get('/:code', userController.login)
+router.get('/check', userController.check)
 router.get('/getSub/:token/:user_id', userController.getSubscriptions)
 
 module.exports = router
