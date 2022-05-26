@@ -27,26 +27,54 @@ class UserController {
     //получение подписок пользователя Сбор подписок людей
     async getSubscriptions(req, res) {
         console.log(req.params)
-        const {token, user_id} = req.params
-        console.log(token)
-        const {data} = await axios.post('https://api.vk.com/method/users.getSubscriptions?v=5.131&access_token='+token+'&user_id='+user_id+'&fields=user,group')
-        console.log(data)
-        return res.json(data)
+        const {token, user_id, fields} = req.params
+        const {data} = await axios.post('https://api.vk.com/method/utils.resolveScreenName?v=5.131&access_token='+token+'&screen_name='+user_id)
+        const id = data.response.object_id
+        if(id!=null){
+            const {data} = await axios.post('https://api.vk.com/method/users.getSubscriptions?v=5.131&extended=1&count=100&access_token='+token+'&user_id='+id+'&fields='+fields)
+            console.log(data)
+            return res.json(data)
+        }
     }
     
+      // информация о пользователе
+    async getUser(req, res) {
+        console.log(req.params)
+        const {token, user_id} = req.params
+        const {data} = await axios.post('https://api.vk.com/method/users.get?v=5.131&access_token='+token+'&user_id='+user_id)
+        return res.json(data)
+    }
+
     //Полная информация о пользователях
     async get(req, res) {
-        const {token, user_id} = req.params
-        console.log(req.params)
-        const {data} = await axios.post('https://api.vk.com/method/users.get?access_token='+token+'fields='+t+'user_id='+user_id)
+        const {token, user_id, fields} = req.params
+        const {data} = await axios.post('https://api.vk.com/method/users.get?v=5.131&access_token='+token+'&fields='+fields+'&user_id='+user_id)
         return res.json(data)
+    }
+
+    //Подписчики
+    async getFollewers(req, res) {
+        const {token, user_id, fields} = req.params
+        const {data} = await axios.post('https://api.vk.com/method/utils.resolveScreenName?v=5.131&access_token='+token+'&screen_name='+user_id)
+        const id = data.response.object_id
+        if(id!=null){
+           const {data} = await axios.post('https://api.vk.com/method/users.getFollowers?v=5.131&offset=0&count=500&access_token='+token+'&fields='+fields+'&user_id='+id)
+            return res.json(data) 
+        }
+        
+    }
+
+    async id(req, res) {
+        const {data} = await axios.post('https://api.vk.com/method/utils.resolveScreenName?v=5.131&access_token='+token+'&screen_name='+user_id)
+        console.log(data)
+        return data.response.object_id
     }
 
     async login(req, res) {
         const {code} = req.params
         console.log(req.params)
         console.log(code)
-        const {data} = await axios.get('https://oauth.vk.com/access_token?scope = offline&client_id=8143523&client_secret=R2fWuaiDSn7WI1CcrYa1&redirect_uri=http://localhost:3000/auth&code='+code)
+        const {data} = await axios.get('https://oauth.vk.com/access_token?scope = offline&client_id=8143523&client_secret=R2fWuaiDSn7WI1CcrYa1&redirect_uri=http://localhost:3000/main&code='+code)
         console.log(data)
 
         const email = data.email
