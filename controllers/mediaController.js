@@ -15,19 +15,47 @@ class MediaController {
         return res.json(data)
     }
     async getInfoVideo(req, res) {
-        const {token, owner_id, videos} = req.params
+        const {token, owner_id, videos, album_id} = req.params
+        let video = videos==='null'? '' : `&videos=`+videos
+        let album = album_id==='null'? '' : `&album_id=`+album_id
+        const {data} = await axios.post('https://api.vk.com/method/video.get?v=5.131&access_token='+token+'&owner_id='+owner_id+video+album)
+        console.log(data)
+        return res.json(data)
+
+        
+    }
+    async getAlbumById(req, res) {
+        const {token, owner_id, album_id} = req.params
         console.log(token)
-        const {data} = await axios.post('https://api.vk.com/method/video.get?v=5.131&access_token='+token+'&extended=1&owner_id='+owner_id+'&videos='+videos)
+        if(album_id==='null'){
+            const {data} = await axios.post('https://api.vk.com/method/video.getAlbums?v=5.131&access_token='+token+'&owner_id='+owner_id+'&extended=1&need_system=1')
+            console.log(data)
+            return res.json(data)
+        }else{
+            const {data} = await axios.post('https://api.vk.com/method/video.getAlbumById?v=5.131&access_token='+token+'&owner_id='+owner_id+'&album_id='+album_id)
+            console.log(data)
+            return res.json(data)
+        }   
+    }
+
+    async searchVideo(req, res) {
+        const {token, q, sort} = req.params
+        console.log(token)
+        const {data} = await axios.post('https://api.vk.com/method/video.search?v=5.131&access_token='+token+'&q='+q+'&sort='+sort+'&hd=1')
         console.log(data)
         return res.json(data)
     }
-    async getInfoAlbomVideo(req, res) {
-        const {token, photos} = req.params
+
+    async searchPhoto(req, res) {
+        const {token, q, end_time, sort, radius} = req.params
         console.log(token)
-        const {data} = await axios.post('https://api.vk.com/method/photos.getById?v=5.131&access_token='+token+'&extended=1&photos='+photos)
+        const {data} = await axios.post('https://api.vk.com/method/photos.search?v=5.131&access_token='+token+'&q='+q+'&sort='+sort+'&radius='+radius)
         console.log(data)
         return res.json(data)
     }
+
+
+    
 }
 
 module.exports = new MediaController()

@@ -13,5 +13,10 @@ router.use('/other', OtherRouter)
 const MediaRouter = require('./mediaRouter')
 router.use('/media', MediaRouter)
 
+const GroupRouter = require('./groupsRouter')
+router.use('/group', GroupRouter)
+
+const StatisticRouter = require('./statisticRouter')
+router.use('/static', StatisticRouter)
 
 module.exports = router

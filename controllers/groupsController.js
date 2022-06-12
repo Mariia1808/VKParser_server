@@ -10,13 +10,15 @@ let arr = []
 class GroupsController {    
     //Все подписчики групп
     async getMembers(req,res) {
-        const {data} = await axios.post('https://api.vk.com/method/groups.getById?'+osnova+'&fields=members_count&group_id=itumor')
+        const {token, group_id, fields, filter} = req.params
+        const {data} = await axios.post('https://api.vk.com/method/groups.getById?v=5.131&access_token='+token+'&fields=members_count&group_id='+group_id)
         //console.log(data)
         let count = data.response[0].members_count
-        let ostatok = count%1000
-        let kolvo = ostatok
-        while(kolvo <= data.response[0].members_count){
-            const {data} = await(await axios.post('https://api.vk.com/method/groups.getMembers?'+osnova+'&count=1000&offset='+Math.round(kolvo)+'&group_id=itumor&sort=id_asc'))
+        let kolvo = count%1000
+        let offset = 0
+        let arr =[]
+        while(offset <= count){
+            const {data} = await(await axios.post('https://api.vk.com/method/groups.getMembers?v=5.131&access_token='+token+'&count='+Number(kolvo)+'&offset='+Math.round(offset)+'&group_id='+group_id+'&sort=id_asc'+'&fields='+fields+'&filter='+filter))
             //console.log(data)
             if(data.response != undefined){
                 for(var te in data.response.items)
@@ -24,22 +26,30 @@ class GroupsController {
                     arr.push(data.response.items[te])
                 }
             }
-            kolvo = kolvo+1000
+            offset = offset+kolvo
+            kolvo = 1000
         }  
         //console.log(arr)
         console.log(res)
         return res.json(arr)
     }
     async getById(req, res) {
-        const {data} = await axios.post('https://api.vk.com/method/groups.getById?'+osnova+'&fields='+
-        'activity, ban_info, can_post,can_see_all_posts,city,contacts,counters,country,cover,'+
-        'description,finish_date,fixed_post,links,market,members_count,place,site,start_date,status,verified,wiki_page'+
-        '&group_id=itumor')
+        const {token, group_id, fields} = req.params
+        const {data} = await axios.post('https://api.vk.com/method/groups.getById?v=5.131&access_token='+token+'&fields='+fields+'&group_ids='+group_id)
         console.log(data)
-        var test = {datas: data.response}
-        console.log(test)
-        return res.json(data)
-        
+        return res.json(data)  
+    }
+    async getCatalogInfo(req, res) {
+        const {token} = req.params
+        const {data} = await axios.post('https://api.vk.com/method/groups.getCatalogInfo?v=5.131&access_token='+token+'&extended=0&subcategories=1')
+        console.log(data)
+        return res.json(data)  
+    }
+    async getCatalog(req, res) {
+        const {token, category_id, subcategory_id} = req.params
+        const {data} = await axios.post('https://api.vk.com/method/groups.getCatalog?v=5.131&access_token='+token+'&category_id='+category_id)
+        console.log(data)
+        return res.json(data)  
     }
 
     
