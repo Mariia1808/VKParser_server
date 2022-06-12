@@ -51,9 +51,18 @@ class GroupsController {
         console.log(data)
         return res.json(data)  
     }
-
-    
-
+    async searchGroup(req, res) {
+        const {token, q, type, sort} = req.params
+        const {data} = await axios.post(encodeURI('https://api.vk.com/method/groups.search?v=5.131&access_token='+token+'&q='+q+'&type='+type+'&sort='+sort+'&count=1000'))
+        console.log(data)
+        return res.json(data)  
+    }
+    async searchEvent(req, res) {
+        const {token, q, city_id, sort} = req.params
+        const {data} = await axios.post(encodeURI('https://api.vk.com/method/groups.search?v=5.131&access_token='+token+'&q='+q+'&type=event&future=1&city_id='+city_id+'&sort='+sort+'&count=1000'))
+        console.log(data)
+        return res.json(data)  
+    }
 }
 
 module.exports = new GroupsController()

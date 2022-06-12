@@ -19,4 +19,10 @@ router.use('/group', GroupRouter)
 const StatisticRouter = require('./statisticRouter')
 router.use('/static', StatisticRouter)
 
+const WallRouter = require('./wallRouter')
+router.use('/wall', WallRouter)
+
+const CommentRouter = require('./commentRouter')
+router.use('/comment', CommentRouter)
+
 module.exports = router

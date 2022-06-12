@@ -9,5 +9,7 @@ router.post('/city/:country_id/:region_id/:token', OtherController.getCities)
 router.post('/universites/:country_id/:city_id/:token', OtherController.getUniversities)
 router.post('/facults/:university_id/:token', OtherController.getFaculties)
 router.post('/short_link/:token', OtherController.getLastShortenedLink)
+router.post('/getCitiesById/:token/:city', OtherController.getCitiesById)
+router.post('/getCountriesById/:token/:country', OtherController.getCountriesById)
 
 module.exports = router

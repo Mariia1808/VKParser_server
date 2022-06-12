@@ -80,6 +80,23 @@ class OtherController {
         console.log(data)
         return res.json(data)
     }
+
+    //получение страны
+    async getCountriesById(req, res) {
+        const {country, token} = req.params
+        const {data} = await axios.post('https://api.vk.com/method/database.getCountriesById?v=5.131&access_token='+token+'&country_ids='+country)
+        console.log(data)
+        return res.json(data)
+    }
+
+    //получение города
+    async getCitiesById(req, res) {
+        const {city, token} = req.params
+        console.log(city)
+        const {data} = await axios.post('https://api.vk.com/method/database.getCitiesById?v=5.131&access_token='+token+'&city_ids='+city)
+        console.log(data)
+        return res.json(data)
+    }
 }
 
 module.exports = new OtherController()

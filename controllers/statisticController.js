@@ -31,19 +31,11 @@ class StatisticController {
         console.log(data)
         return res.json(data)
     }
-    //статистика групп по датам
-    async StatsGroup(req, res) {
-        const {token, group_id, timestamp_from, timestamp_to} = req.params
-        console.log(token)
-        const {data} = await axios.post('https://api.vk.com/method/stats.get?v=5.131&access_token='+token+'&interval=month&group_id='+Number(group_id)+'&timestamp_from='+Number(timestamp_from)+'&timestamp_to='+Number(timestamp_to))
-        console.log(data)
-        return res.json(data)
-    }
     //статистика приложений по датам
-    async StatsApp(req, res) {
-        const {token, app_id, timestamp_from, timestamp_to} = req.params
+    async getLinkStats(req, res) {
+        const {token, key} = req.params
         console.log(token)
-        const {data} = await axios.post('https://api.vk.com/method/stats.get?v=5.131&access_token='+token+'&interval=month&app_id='+app_id+'&timestamp_from='+timestamp_from+'&timestamp_to='+timestamp_to)
+        const {data} = await axios.post('https://api.vk.com/method/utils.getLinkStats?v=5.131&access_token='+token+'&interval=forever&key='+key+'&extended=1')
         console.log(data)
         return res.json(data)
     }

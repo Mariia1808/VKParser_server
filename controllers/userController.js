@@ -105,6 +105,73 @@ class UserController {
         )
         return res.json(user)
     }
+    async searchUserSchool(req, res) {
+        const {token, q, sort, fields, sex, age_from, age_to, group_id, from_list, school, school_year} = req.params
+        sex = sex==='null'? '' : `&sex=`+sex
+        q = q==='null'? '' : `&q=`+q
+        age_from = age_from==='null'? '' : `&age_from=`+age_from
+        age_to = age_to==='null'? '' : `&age_to=`+age_to
+        group_id = group_id==='null'? '' : `&group_id=`+group_id
+        from_list = from_list==='null'? '' : `&from_list=`+from_list
+
+        school = school==='null'? '' : `&school=`+school
+        school_year = school_year==='null'? '' : `&school_year=`+school_year
+
+        const {data} = await axios.post('https://api.vk.com/method/users.search?v=5.131&access_token='+token+'&sort='+sort+'&fields='+q+fields+sex+age_from+age_to+group_id+from_list+school+school_year)
+        console.log(data)
+        return res.json(data)
+    }
+    async searchUserUniversity(req, res) {
+        const {token, q, sort, fields, sex, age_from, age_to, group_id, from_list, university, university_year, university_faculty, university_chair} = req.params
+        q = q==='null'? '' : `&q=`+q
+        sex = sex==='null'? '' : `&sex=`+sex
+        age_from = age_from==='null'? '' : `&age_from=`+age_from
+        age_to = age_to==='null'? '' : `&age_to=`+age_to
+        group_id = group_id==='null'? '' : `&group_id=`+group_id
+        from_list = from_list==='null'? '' : `&from_list=`+from_list
+
+        university = university==='null'? '' : `&university=`+university
+        university_year = university_year==='null'? '' : `&university_year=`+university_year
+        university_faculty = university_faculty==='null'? '' : `&university_faculty=`+university_faculty
+        university_chair = university_chair==='null'? '' : `&university_chair=`+university_chair
+
+        const {data} = await axios.post('https://api.vk.com/method/users.search?v=5.131&access_token='+token+'&sort='+sort+'&fields='+fields+q+sex+age_from+age_to+group_id+from_list+university+university_chair+university_faculty+university_year)
+        console.log(data)
+        return res.json(data)
+    }
+    async searchUserWork(req, res) {
+        const {token, q, sort, fields, city, sex, age_from, age_to, group_id, from_list, company, position} = req.params
+        city = city==='null'? '' : `&city=`+city
+        q = q==='null'? '' : `&q=`+q
+        sex = sex==='null'? '' : `&sex=`+sex
+        age_from = age_from==='null'? '' : `&age_from=`+age_from
+        age_to = age_to==='null'? '' : `&age_to=`+age_to
+        group_id = group_id==='null'? '' : `&group_id=`+group_id
+        from_list = from_list==='null'? '' : `&from_list=`+from_list
+
+        company = company==='null'? '' : `&company=`+company
+        position = position==='null'? '' : `&position=`+position
+
+        const {data} = await axios.post('https://api.vk.com/method/users.search?v=5.131&access_token='+token+'&sort='+sort+'&fields='+fields+city+sex+q+age_from+age_to+group_id+from_list+company+position)
+        console.log(data)
+        return res.json(data)
+    }
+    async searchUserAll(req, res) {
+        const {token, q, sort, fields, city, sex, status, age_from, age_to, birth_day, birth_month, birth_year, group_id, from_list} = req.params
+        city = city==='null'? '' : `&city=`+city
+        sex = sex==='null'? '' : `&sex=`+sex
+        status = status==='null'? '' : `&status=`+status
+        age_from = age_from==='null'? '' : `&age_from=`+age_from
+        age_to = age_to==='null'? '' : `&age_to=`+age_to
+        birth_day = birth_day==='null'? '' : `&birth_day=`+birth_day
+        birth_month = birth_month==='null'? '' : `&birth_month=`+birth_month
+        birth_year = birth_year==='null'? '' : `&birth_year=`+birth_year
+        group_id = group_id==='null'? '' : `&group_id=`+group_id
+        from_list = from_list==='null'? '' : `&from_list=`+from_list
+        const {data} = await axios.post('https://api.vk.com/method/users.search?v=5.131&access_token='+token+'&q='+q+'&sort='+sort+'&fields='+fields+city+sex+status+age_from+age_to+birth_day+birth_month+birth_year+group_id+from_list)
+        console.log(data)
+        return res.json(data)
+    }
 }
 
 module.exports = new UserController()
