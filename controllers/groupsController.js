@@ -13,25 +13,31 @@ class GroupsController {
         const {token, group_id, fields, filter} = req.params
         const {data} = await axios.post('https://api.vk.com/method/groups.getById?v=5.131&access_token='+token+'&fields=members_count&group_id='+group_id)
         //console.log(data)
-        let count = data.response[0].members_count
-        let kolvo = count%1000
-        let offset = 0
-        let arr =[]
-        while(offset <= count){
-            const {data} = await(await axios.post('https://api.vk.com/method/groups.getMembers?v=5.131&access_token='+token+'&count='+Number(kolvo)+'&offset='+Math.round(offset)+'&group_id='+group_id+'&sort=id_asc'+'&fields='+fields+'&filter='+filter))
-            //console.log(data)
-            if(data.response != undefined){
-                for(var te in data.response.items)
-                {
-                    arr.push(data.response.items[te])
+        if(data.response!==undefined){
+             let count = data.response[0].members_count
+            let kolvo = count%1000
+            let offset = 0
+            let arr =[]
+            while(offset <= count){
+                const {data} = await(await axios.post('https://api.vk.com/method/groups.getMembers?v=5.131&access_token='+token+'&count='+Number(kolvo)+'&offset='+Math.round(offset)+'&group_id='+group_id+'&sort=id_asc'+'&fields='+fields+'&filter='+filter))
+                //console.log(data)
+                if(data.response != undefined){
+                    for(var te in data.response.items)
+                    {
+                        arr.push(data.response.items[te])
+                    }
                 }
-            }
-            offset = offset+kolvo
-            kolvo = 1000
-        }  
-        //console.log(arr)
-        console.log(res)
-        return res.json(arr)
+                offset = offset+kolvo
+                kolvo = 1000
+            }  
+            //console.log(arr)
+            console.log(res)
+            return res.json(arr)
+        }else{
+            let arr=[]
+            return res.json(arr)
+        }
+       
     }
     async getById(req, res) {
         const {token, group_id, fields} = req.params

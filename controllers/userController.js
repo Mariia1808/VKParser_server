@@ -107,69 +107,76 @@ class UserController {
     }
     async searchUserSchool(req, res) {
         const {token, q, sort, fields, sex, age_from, age_to, group_id, from_list, school, school_year} = req.params
-        sex = sex==='null'? '' : `&sex=`+sex
-        q = q==='null'? '' : `&q=`+q
-        age_from = age_from==='null'? '' : `&age_from=`+age_from
-        age_to = age_to==='null'? '' : `&age_to=`+age_to
-        group_id = group_id==='null'? '' : `&group_id=`+group_id
-        from_list = from_list==='null'? '' : `&from_list=`+from_list
+        let i_sex = sex==='null'? '' : `&sex=`+sex
+        let i_q = q==='null'? '' : `&q=`+q
+        let i_sort = sort==='null'? '' : `&sort=`+sort
+        let i_age_from = age_from==='null'? '' : `&age_from=`+age_from
+        let i_age_to = age_to==='null'? '' : `&age_to=`+age_to
+        let i_group_id = group_id==='null'? '' : `&group_id=`+group_id
+        let i_from_list = from_list==='null'? '' : `&from_list=`+from_list
 
-        school = school==='null'? '' : `&school=`+school
-        school_year = school_year==='null'? '' : `&school_year=`+school_year
+        let i_school = school==='null'? '' : `&school=`+school
+        let i_school_year = school_year==='null'? '' : `&school_year=`+school_year
 
-        const {data} = await axios.post('https://api.vk.com/method/users.search?v=5.131&access_token='+token+'&sort='+sort+'&fields='+q+fields+sex+age_from+age_to+group_id+from_list+school+school_year)
+        const {data} = await axios.post(encodeURI('https://api.vk.com/method/users.search?v=5.131&count=1000&access_token='+token+'&fields='+fields+i_q+i_sex+i_age_from+i_age_to+i_group_id+i_from_list+i_school+i_school_year+i_sort+i_q))
         console.log(data)
         return res.json(data)
     }
     async searchUserUniversity(req, res) {
-        const {token, q, sort, fields, sex, age_from, age_to, group_id, from_list, university, university_year, university_faculty, university_chair} = req.params
-        q = q==='null'? '' : `&q=`+q
-        sex = sex==='null'? '' : `&sex=`+sex
-        age_from = age_from==='null'? '' : `&age_from=`+age_from
-        age_to = age_to==='null'? '' : `&age_to=`+age_to
-        group_id = group_id==='null'? '' : `&group_id=`+group_id
-        from_list = from_list==='null'? '' : `&from_list=`+from_list
+        const {token, q, sort, fields, sex, age_from, age_to, group_id, from_list, university, university_year, university_faculty} = req.params
+        let i_q = q==='null'? '' : `&q=`+q
+        let i_sex = sex==='null'? '' : `&sex=`+sex
+        let i_sort = sort==='null'? '' : `&sort=`+sort
+        let i_age_from = age_from==='null'? '' : `&age_from=`+age_from
+        let i_age_to = age_to==='null'? '' : `&age_to=`+age_to
+        let i_group_id = group_id==='null'? '' : `&group_id=`+group_id
+        let i_from_list = from_list==='null'? '' : `&from_list=`+from_list
 
-        university = university==='null'? '' : `&university=`+university
-        university_year = university_year==='null'? '' : `&university_year=`+university_year
-        university_faculty = university_faculty==='null'? '' : `&university_faculty=`+university_faculty
-        university_chair = university_chair==='null'? '' : `&university_chair=`+university_chair
-
-        const {data} = await axios.post('https://api.vk.com/method/users.search?v=5.131&access_token='+token+'&sort='+sort+'&fields='+fields+q+sex+age_from+age_to+group_id+from_list+university+university_chair+university_faculty+university_year)
+        let i_university = university==='null'? '' : `&university=`+university
+        let i_university_year = university_year==='null'? '' : `&university_year=`+university_year
+        let i_university_faculty = university_faculty==='null'? '' : `&university_faculty=`+university_faculty
+        
+        const {data} = await axios.post(encodeURI('https://api.vk.com/method/users.search?v=5.131&count=1000&access_token='+token+'&fields='+fields+i_q+i_sex+i_age_from+i_age_to+i_group_id+i_from_list+i_university+i_university_faculty+i_university_year+i_sort))
         console.log(data)
         return res.json(data)
     }
     async searchUserWork(req, res) {
         const {token, q, sort, fields, city, sex, age_from, age_to, group_id, from_list, company, position} = req.params
-        city = city==='null'? '' : `&city=`+city
-        q = q==='null'? '' : `&q=`+q
-        sex = sex==='null'? '' : `&sex=`+sex
-        age_from = age_from==='null'? '' : `&age_from=`+age_from
-        age_to = age_to==='null'? '' : `&age_to=`+age_to
-        group_id = group_id==='null'? '' : `&group_id=`+group_id
-        from_list = from_list==='null'? '' : `&from_list=`+from_list
+        let i_city = city==='null'? '' : `&city=`+city
+        let i_q = q==='null'? '' : `&q=`+q
+        let i_sort = sort==='null'? '' : `&sort=`+sort
+        let i_sex = sex==='null'? '' : `&sex=`+sex
+        let i_age_from = age_from==='null'? '' : `&age_from=`+age_from
+        let i_age_to = age_to==='null'? '' : `&age_to=`+age_to
+        let i_group_id = group_id==='null'? '' : `&group_id=`+group_id
+        let i_from_list = from_list==='null'? '' : `&from_list=`+from_list
 
-        company = company==='null'? '' : `&company=`+company
-        position = position==='null'? '' : `&position=`+position
+        let i_company = company==='null'? '' : `&company=`+company
+        let i_position = position==='null'? '' : `&position=`+position
 
-        const {data} = await axios.post('https://api.vk.com/method/users.search?v=5.131&access_token='+token+'&sort='+sort+'&fields='+fields+city+sex+q+age_from+age_to+group_id+from_list+company+position)
+        const {data} = await axios.post(encodeURI('https://api.vk.com/method/users.search?v=5.131&count=1000&access_token='+token+'&fields='+fields+i_city+i_sex+i_q+i_age_from+i_age_to+i_group_id+i_from_list+i_company+i_position+i_sort))
         console.log(data)
         return res.json(data)
     }
     async searchUserAll(req, res) {
         const {token, q, sort, fields, city, sex, status, age_from, age_to, birth_day, birth_month, birth_year, group_id, from_list} = req.params
-        city = city==='null'? '' : `&city=`+city
-        sex = sex==='null'? '' : `&sex=`+sex
-        status = status==='null'? '' : `&status=`+status
-        age_from = age_from==='null'? '' : `&age_from=`+age_from
-        age_to = age_to==='null'? '' : `&age_to=`+age_to
-        birth_day = birth_day==='null'? '' : `&birth_day=`+birth_day
-        birth_month = birth_month==='null'? '' : `&birth_month=`+birth_month
-        birth_year = birth_year==='null'? '' : `&birth_year=`+birth_year
-        group_id = group_id==='null'? '' : `&group_id=`+group_id
-        from_list = from_list==='null'? '' : `&from_list=`+from_list
-        const {data} = await axios.post('https://api.vk.com/method/users.search?v=5.131&access_token='+token+'&q='+q+'&sort='+sort+'&fields='+fields+city+sex+status+age_from+age_to+birth_day+birth_month+birth_year+group_id+from_list)
+        let i_city = city==='null'? '' : `&city=`+city
+        let i_q = q==='null'? '' : `&q=`+q
+        let i_sort = sort==='null'? '' : `&sort=`+sort
+        let i_sex = sex==='null'? '' : `&sex=`+sex
+        let i_status = status==='null'? '' : `&status=`+status
+        let i_age_from = age_from==='null'? '' : `&age_from=`+age_from
+        let i_age_to = age_to==='null'? '' : `&age_to=`+age_to
+        let i_birth_day = birth_day==='null'? '' : `&birth_day=`+birth_day
+        let i_birth_month = birth_month==='null'? '' : `&birth_month=`+birth_month
+        let i_birth_year = birth_year==='null'? '' : `&birth_year=`+birth_year
+        let i_group_id = group_id==='null'? '' : `&group_id=`+group_id
+        let i_from_list = from_list==='null'? '' : `&from_list=`+from_list
+        const {data} = await axios.post(encodeURI('https://api.vk.com/method/users.search?v=5.131&count=1000&access_token='+token+'&fields='+fields+i_city+i_sex+i_status+i_age_from+i_age_to+i_birth_day+i_birth_month+i_birth_year+i_group_id+i_from_list+i_q+i_sort))
+        
         console.log(data)
+        console.log('https://api.vk.com/method/users.search?v=5.131&count=1000&access_token='+token+'&fields='+fields+i_city+i_sex+i_status+i_age_from+i_age_to+i_birth_day+i_birth_month+i_birth_year+i_group_id+i_from_list+i_q+i_sort)
+        
         return res.json(data)
     }
 }

@@ -5,19 +5,30 @@ const axios = require('axios')
 class OtherController {   
     //преобразование короткого имени
     async resolveScreenName(req, res) {
+        try{
         const {user_id, token} = req.params
         console.log(user_id)
-        const names = String(user_id).split(',')
-        console.log(names)
-        const arr = []
-        for(let i in names){
-            console.log(names[i])
-            const {data} = await axios.post('https://api.vk.com/method/utils.resolveScreenName?v=5.131&access_token='+token+'&screen_name='+names[i])
-            arr.push(data.response)
-        }
+        if(user_id!=='null'){
+            const names = String(user_id).split(',')
+            console.log(names)
+            const arr = []
+            for(let i in names){
+                console.log(names[i])
+                const {data} = await axios.post('https://api.vk.com/method/utils.resolveScreenName?v=5.131&access_token='+token+'&screen_name='+names[i])
+                arr.push(data.response)
+                return res.json(arr)
+            }
+
+        }else{
+                return res.json('')
+            }
+        
         //const {data} = await axios.post('https://api.vk.com/method/utils.resolveScreenName?v=5.131&access_token='+token+'&screen_name='+user_id)
        
-        return res.json(arr)
+        
+    }catch{
+        return res.json('')
+    }
     }
     //список стран
     async getCountries(req, res) {
@@ -39,25 +50,30 @@ class OtherController {
     async getCities(req, res) {
         const {country_id, region_id, token} = req.params
         const {data} = await axios.post('https://api.vk.com/method/database.getCities?v=5.131&access_token='+token+'&country_id='+country_id+'&region_id='+region_id+'&need_all=0&count=1000')
-        let count = data.response.count
-        //console.log(data.response.count)
-        let kolvo = count%1000
-        let offset = 0
-        let arr =[]
-        //console.log(kolvo)
-        while(offset <= count){
-            const {data} = await (await axios.post('https://api.vk.com/method/database.getCities?v=5.131&access_token='+token+'&country_id='+country_id+'&region_id='+region_id+'&count='+Number(kolvo)+'&offset='+Math.round(offset)))
-            if(data.response !== undefined){
-                for(var te in data.response.items)
-                {
-                    arr.push(data.response.items[te])
+        if(data.response!==undefined){
+            let count = data.response.count
+            //console.log(data.response.count)
+            let kolvo = count%1000
+            let offset = 0
+            let arr =[]
+            //console.log(kolvo)
+            while(offset <= count){
+                const {data} = await (await axios.post('https://api.vk.com/method/database.getCities?v=5.131&access_token='+token+'&country_id='+country_id+'&region_id='+region_id+'&count='+Number(kolvo)+'&offset='+Math.round(offset)))
+                if(data.response !== undefined){
+                    for(var te in data.response.items)
+                    {
+                        arr.push(data.response.items[te])
+                    }
                 }
-            }
-            offset = offset+kolvo
-            kolvo = 1000
-        }  
-        console.log(arr.length)
-        return res.json(arr)
+                offset = offset+kolvo
+                kolvo = 1000
+            }  
+            console.log(arr.length)
+            return res.json(arr)
+        }else{
+            let arr=[]
+            return res.json(arr)
+        }
     }
     //список университетов
     async getUniversities(req, res) {
@@ -97,6 +113,20 @@ class OtherController {
         console.log(data)
         return res.json(data)
     }
+
+    //получение школ
+    async getSchools(req, res) {
+        const { token, city_id} = req.params
+        const {data} = await axios.post('https://api.vk.com/method/database.getSchools?v=5.131&access_token='+token+'&city_id='+city_id)
+        const d = data
+        if (d.response!==undefined){
+            const {data} = await axios.post('https://api.vk.com/method/database.getSchools?v=5.131&access_token='+token+'&city_id='+city_id+'&count='+d.response.count)
+            console.log(data)
+            return res.json(data)
+        }
+        
+    }
+    
 }
 
 module.exports = new OtherController()
