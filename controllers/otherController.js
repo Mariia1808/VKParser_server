@@ -16,19 +16,16 @@ class OtherController {
                 console.log(names[i])
                 const {data} = await axios.post('https://api.vk.com/method/utils.resolveScreenName?v=5.131&access_token='+token+'&screen_name='+names[i])
                 arr.push(data.response)
-                return res.json(arr)
+                
             }
-
+                return res.json(arr)
         }else{
                 return res.json('')
             }
-        
-        //const {data} = await axios.post('https://api.vk.com/method/utils.resolveScreenName?v=5.131&access_token='+token+'&screen_name='+user_id)
-       
-        
-    }catch{
-        return res.json('')
-    }
+
+            }catch{
+            return res.json('')
+        }
     }
     //список стран
     async getCountries(req, res) {
@@ -38,6 +35,7 @@ class OtherController {
         console.log(data)
         return res.json(data)
     }
+
     //список регионов
     async getRegions(req, res) {
         const {country_id, token} = req.params

@@ -26,7 +26,9 @@ class WallController {
     async search(req, res) {
         const {token, owner_id, query} = req.params
         console.log(token)
-        const {data} = await axios.post(encodeURI('https://api.vk.com/method/wall.search?v=5.131&access_token='+token+'&extended=1&owner_id='+owner_id+'&query='+query))
+        let i_owner_id = owner_id==='null'? '' : `&owner_id=`+owner_id
+        let i_query = query==='null'? '' : `&query=`+query
+        const {data} = await axios.post(encodeURI('https://api.vk.com/method/wall.search?v=5.131&access_token='+token+'&extended=1'+i_owner_id+i_query))
         console.log(data)
         return res.json(data)
     }

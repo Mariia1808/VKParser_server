@@ -40,7 +40,9 @@ class MediaController {
     async searchVideo(req, res) {
         const {token, q, sort} = req.params
         console.log(token)
-        const {data} = await axios.post(encodeURI('https://api.vk.com/method/video.search?v=5.131&access_token='+token+'&q='+q+'&sort='+sort+'&hd=1'))
+        let i_q = q==='null'? '' : `&q=`+q
+        let i_sort = sort==='null'? `` : `&sort=`+sort
+        const {data} = await axios.post(encodeURI('https://api.vk.com/method/video.search?v=5.131&count=100&access_token='+token+'&hd=1'+i_sort+i_q))
         console.log(data)
         return res.json(data)
     }
@@ -48,7 +50,10 @@ class MediaController {
     async searchPhoto(req, res) {
         const {token, q, end_time, sort, radius} = req.params
         console.log(token)
-        const {data} = await axios.post(encodeURI('https://api.vk.com/method/photos.search?v=5.131&access_token='+token+'&q='+q+'&sort='+sort+'&radius='+radius))
+        let i_q = q==='null'? '' : `&q=`+q
+        let i_sort = sort==='null'? '' : `&sort=`+sort
+        let i_radius = radius==='null'? '' : `&radius=`+radius
+        const {data} = await axios.post(encodeURI('https://api.vk.com/method/photos.search?v=5.131&count=1000&access_token='+token+i_sort+i_radius+i_q))
         console.log(data)
         return res.json(data)
     }

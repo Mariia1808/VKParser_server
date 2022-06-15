@@ -2,7 +2,7 @@ const Router = require('express')
 const router = new Router()
 const userController = require('../controllers/userController')
 
-router.get('/:code', userController.login)
+router.get('/login/:code', userController.login)
 router.get('/getUser/:token/:user_id', userController.getUser)
 router.get('/check', userController.check)
 router.get('/getSub/:token/:user_id/:fields', userController.getSubscriptions)

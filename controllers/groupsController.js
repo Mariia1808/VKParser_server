@@ -12,6 +12,7 @@ class GroupsController {
     async getMembers(req,res) {
         const {token, group_id, fields, filter} = req.params
         const {data} = await axios.post('https://api.vk.com/method/groups.getById?v=5.131&access_token='+token+'&fields=members_count&group_id='+group_id)
+        let i_filter = filter==='null'? '' : `&filter=`+filter
         //console.log(data)
         if(data.response!==undefined){
              let count = data.response[0].members_count
@@ -19,14 +20,21 @@ class GroupsController {
             let offset = 0
             let arr =[]
             while(offset <= count){
-                const {data} = await(await axios.post('https://api.vk.com/method/groups.getMembers?v=5.131&access_token='+token+'&count='+Number(kolvo)+'&offset='+Math.round(offset)+'&group_id='+group_id+'&sort=id_asc'+'&fields='+fields+'&filter='+filter))
+                const {data} = await(await axios.post('https://api.vk.com/method/groups.getMembers?v=5.131&access_token='+token+'&count='+Number(kolvo)+'&offset='+Math.round(offset)+'&group_id='+group_id+'&sort=id_asc'+'&fields='+fields+i_filter))
                 //console.log(data)
                 if(data.response != undefined){
-                    for(var te in data.response.items)
-                    {
-                        arr.push(data.response.items[te])
+                    
+                        arr.push(...data.response.items)
+                    
+                }else{
+                    const {data} = await(await axios.post('https://api.vk.com/method/groups.getMembers?v=5.131&access_token='+token+'&count='+Number(kolvo)+'&offset='+Math.round(offset)+'&group_id='+group_id+'&sort=id_asc'+'&fields='+fields+i_filter))
+                    if(data.response != undefined){
+                        
+                            arr.push(...data.response.items)
+                        
                     }
                 }
+                console.log(arr.length)
                 offset = offset+kolvo
                 kolvo = 1000
             }  
@@ -59,13 +67,19 @@ class GroupsController {
     }
     async searchGroup(req, res) {
         const {token, q, type, sort} = req.params
-        const {data} = await axios.post(encodeURI('https://api.vk.com/method/groups.search?v=5.131&access_token='+token+'&q='+q+'&type='+type+'&sort='+sort+'&count=1000'))
+        let i_q = q==='null'? '' : `&q=`+q
+        let i_sort = sort==='null'? '' : `&sort=`+sort
+        let i_type = type==='null'? '' : `&type=`+type
+        const {data} = await axios.post(encodeURI('https://api.vk.com/method/groups.search?v=5.131&access_token='+token+'&count=1000'+i_q+i_type+i_sort))
         console.log(data)
         return res.json(data)  
     }
     async searchEvent(req, res) {
         const {token, q, city_id, sort} = req.params
-        const {data} = await axios.post(encodeURI('https://api.vk.com/method/groups.search?v=5.131&access_token='+token+'&q='+q+'&type=event&future=1&city_id='+city_id+'&sort='+sort+'&count=1000'))
+        let i_q = q==='null'? '' : `&q=`+q
+        let i_sort = sort==='null'? '' : `&sort=`+sort
+        let i_city_id = city_id==='null'? '' : `&city_id=`+city_id
+        const {data} = await axios.post(encodeURI('https://api.vk.com/method/groups.search?v=5.131&access_token='+token+'&type=event&future=1&count=1000'+i_city_id+i_sort+i_q))
         console.log(data)
         return res.json(data)  
     }
