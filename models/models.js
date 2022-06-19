@@ -13,13 +13,31 @@ const History = sequelize.define('history',{
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     itog: {type: DataTypes.STRING, allowNull: false},
     zapros: {type: DataTypes.STRING, allowNull: false},
+})
 
+const Methods = sequelize.define('methods',{
+    ID: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    name: {type: DataTypes.STRING, allowNull: false},
+    method: {type: DataTypes.STRING, allowNull: false},
+})
+
+const Parameter = sequelize.define('parameter',{
+    ID: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    parameters: {type: DataTypes.STRING, allowNull: false},
 })
 
 User.hasMany(History)
 History.belongsTo(User)
 
+Methods.hasMany(Parameter)
+Parameter.belongsTo(Methods)
+
+History.hasOne(Parameter)
+Parameter.belongsTo(History)
+
 module.exports = {
     User,
-    History
+    History,
+    Methods,
+    Parameter
 }
