@@ -1,5 +1,5 @@
 const Router = require('express')
-const OtherController = require('../controllers/OtherController')
+const OtherController = require('../controllers/otherController')
 const router = new Router()
 
 router.post('/resolve/:user_id/:token', OtherController.resolveScreenName)
