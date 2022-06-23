@@ -1,5 +1,5 @@
 const Router = require('express')
-const MediaController = require('../controllers/MediaController')
+const MediaController = require('../controllers/mediaController')
 const router = new Router()
 
 router.post('/getInfoPhoto/:token/:photos', MediaController.getInfoPhoto)
