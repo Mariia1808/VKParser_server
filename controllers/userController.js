@@ -89,7 +89,7 @@ class UserController {
             return res.json({token})
         }
         
-        const user = await User.create({token: data.access_token, user_id: data.user_id})
+        const user = await User.create({token: data.access_token, user_id: data.user_id, email: data.email})
         const token = generateJwt(user.ID,  user.token, user.user_id)
         return res.json({token})
     }
