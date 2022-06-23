@@ -6,7 +6,6 @@ const User = sequelize.define('users',{
     ID: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     token: {type: DataTypes.STRING, allowNull: false},
     user_id: {type: DataTypes.STRING, allowNull: false},
-    email: {type: DataTypes.STRING, allowNull: false},
 })
 
 const History = sequelize.define('history',{
