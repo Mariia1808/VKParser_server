@@ -74,7 +74,7 @@ class UserController {
         const {code} = req.params
         console.log(req.params)
         console.log(code)
-        const {data} = await axios.get('https://oauth.vk.com/access_token?scope=offline&client_id=8143523&client_secret=R2fWuaiDSn7WI1CcrYa1&redirect_uri=https://parservkontakte.netlify.app/main&code='+code)
+        const {data} = await axios.get('https://oauth.vk.com/access_token?scope=offline&client_id=8143523&client_secret=R2fWuaiDSn7WI1CcrYa1&redirect_uri=http://localhost:3000/main&code='+code)
         console.log(data)
 
         const email = data.email
