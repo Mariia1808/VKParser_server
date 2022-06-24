@@ -86,10 +86,12 @@ class UserController {
             ))).update({token: data.access_token},)
             console.log(user)
             const token = generateJwt(user.ID, user.token, user.user_id)
+            res.set('Access-Control-Allow-Origin', '*');
             return res.json({token})
         }else{
             const user = await User.create({token: data.access_token, user_id: data.user_id, email: data.email})
             const token = generateJwt(user.ID,  user.token, user.user_id)
+            res.set('Access-Control-Allow-Origin', '*');
             return res.json({token})
         }
         
