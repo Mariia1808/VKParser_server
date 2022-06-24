@@ -22,6 +22,9 @@ const generateJwt = (id, token, user_id) => {
     )
 }
 
+const header = {
+    'Access-Control-Allow-Origin': '*'
+}
 
 class UserController {    
     //получение подписок пользователя Сбор подписок людей
@@ -91,7 +94,7 @@ class UserController {
         
         const user = await User.create({token: data.access_token, user_id: data.user_id, email: data.email})
         const token = generateJwt(user.ID,  user.token, user.user_id)
-        return res.json({token})
+        return res.json({token}, {headers:header})
     }
     
     async check(req, res){
