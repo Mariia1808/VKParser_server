@@ -2,7 +2,7 @@ const Router = require('express')
 const router = new Router()
 const userController = require('../controllers/userController')
 
-router.get('/login/:code', userController.login)
+router.post('/login/:code', userController.login)
 router.post('/getUser/:token/:user_id', userController.getUser)
 router.post('/check', userController.check)
 router.post('/getSub/:token/:user_id/:fields', userController.getSubscriptions)
