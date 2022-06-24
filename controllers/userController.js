@@ -71,7 +71,8 @@ class UserController {
     }
 
     async login(req, res) {
-        const {code} = req.params
+        try{
+    const {code} = req.params
         console.log(req.params)
         console.log(code)
         const {data} = await axios.get('https://oauth.vk.com/access_token?scope=offline&client_id=8143523&client_secret=R2fWuaiDSn7WI1CcrYa1&redirect_uri=http://localhost:3000/main&code='+code)
@@ -94,6 +95,10 @@ class UserController {
             res.set('Access-Control-Allow-Origin', '*');
             return res.json({token})
         }
+        }catch{
+
+        }
+        
         
     }
     
