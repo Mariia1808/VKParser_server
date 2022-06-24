@@ -74,15 +74,15 @@ class UserController {
         const {code} = req.params
         console.log(req.params)
         console.log(code)
-        const {data} = await axios.get('https://oauth.vk.com/access_token?scope=offline&client_id=8143523&client_secret=R2fWuaiDSn7WI1CcrYa1&redirect_uri=http://localhost:3000/main&code='+code)
+        const {data} = await axios.get('https://oauth.vk.com/access_token?scope=offline&client_id=8143523&client_secret=R2fWuaiDSn7WI1CcrYa1&redirect_uri=https://parservkontakte.netlify.app/main&code='+code)
         console.log(data)
 
-        const user_id = data.user_id
+        const email = data.email
         const hashToken = await bcrypt.hash(data.access_token, 5)
 
-        const candidate = await User.findOne({where:{user_id:user_id}})
+        const candidate = await User.findOne({where:{email}})
         if (candidate){
-            const user = await ( await (User.findOne({where: {user_id:user_id}},
+            const user = await ( await (User.findOne({where: {email}},
             ))).update({token: data.access_token},)
             console.log(user)
             const token = generateJwt(user.ID, user.token, user.user_id)
