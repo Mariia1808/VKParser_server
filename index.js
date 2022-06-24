@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 5000
 const app = express()
 const isProduction = process.env.NODE_ENV === 'production'
 const origin = {
-  origin: isProduction ? 'https://www.example.com' : '*',
+  origin: 'http://localhost:3000',
 }
 
 app.use(cors(origin))
