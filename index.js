@@ -16,9 +16,10 @@ app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb', extended: true, parameterLimit: 50000}));
 app.use(express.static(path.resolve(__dirname, 'static')))
 app.use('/api', router)
-app.get('/allow-cors', function(request, response) {
-    response.set('Access-Control-Allow-Origin', '*');
-  });
+app.get('/', (req, res)=>{
+    res.status(200).json({message:"work"})
+})
+
 
 
 const start = async () => {
