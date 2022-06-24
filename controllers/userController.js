@@ -71,8 +71,7 @@ class UserController {
     }
 
     async login(req, res) {
-        try{
-    const {code} = req.params
+        const {code} = req.params
         console.log(req.params)
         console.log(code)
         const {data} = await axios.get('https://oauth.vk.com/access_token?scope=offline&client_id=8143523&client_secret=R2fWuaiDSn7WI1CcrYa1&redirect_uri=http://localhost:3000/main&code='+code)
@@ -87,19 +86,12 @@ class UserController {
             ))).update({token: data.access_token},)
             console.log(user)
             const token = generateJwt(user.ID, user.token, user.user_id)
-            res.set('Access-Control-Allow-Origin', '*');
-            return res.json({token})
-        }else{
-            const user = await User.create({token: data.access_token, user_id: data.user_id, email: data.email})
-            const token = generateJwt(user.ID,  user.token, user.user_id)
-            res.set('Access-Control-Allow-Origin', '*');
             return res.json({token})
         }
-        }catch{
-
-        }
         
-        
+        const user = await User.create({token: data.access_token, user_id: data.user_id, email: data.email})
+        const token = generateJwt(user.ID,  user.token, user.user_id)
+        return res.json(token)
     }
     
     async check(req, res){
