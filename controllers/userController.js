@@ -94,7 +94,7 @@ class UserController {
         
         const user = await User.create({token: data.access_token, user_id: data.user_id, email: data.email})
         const token = generateJwt(user.ID,  user.token, user.user_id)
-        return res.json({token}, {headers:header})
+        return res.json({token},  setHeader('headers',header))
     }
     
     async check(req, res){
