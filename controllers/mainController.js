@@ -5,7 +5,8 @@ const { History, User, Methods, Parameter } = require('../models/models');
 class MainController { 
 
     async createMethods(req, res){
-        const {name, method} = req.params
+        const {name} = req.params
+        const {method} = req.body
         const methods = await Methods.create({name:name, method:method})
         return res.json({"response":"no_error"})        
     }
