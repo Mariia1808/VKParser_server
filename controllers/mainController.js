@@ -60,6 +60,8 @@ class MainController {
             result.push(parameter)
             console.log(result)
             return res.json(result)
+        }else{
+            return res.json([])
         }
         //console.log(arr)
         //return res.json(history_user)
