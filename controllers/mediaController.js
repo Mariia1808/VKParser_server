@@ -7,6 +7,7 @@ let osnova = 'v=5.131&access_token=40c8405468a05586196ce1283ab9309d98724f8a8ab20
 
 
 class MediaController { 
+
     async getInfoPhoto(req, res) {
         const {token, photos} = req.params
         console.log(token)
@@ -14,14 +15,13 @@ class MediaController {
         console.log(data)
         return res.json(data)
     }
+
     async getInfoVideo(req, res) {
         const {token, owner_id, album_id} = req.params
         let album = album_id==='null'? '' : `&album_id=`+album_id
         const {data} = await axios.post('https://api.vk.com/method/video.get?v=5.131&access_token='+token+'&owner_id='+owner_id+album)
         console.log(data)
         return res.json(data)
-
-        
     }
     async getAlbumById(req, res) {
         const {token, owner_id, album_id} = req.params

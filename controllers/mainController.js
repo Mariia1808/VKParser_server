@@ -3,15 +3,25 @@ const axios = require('axios')
 const { History, User, Methods, Parameter } = require('../models/models');
 
 class MainController { 
+
+    async createMethods(req, res){
+        const {name, method} = req.params
+        const methods = await Methods.create({name:name, method:method})
+        return res.json({"response":"no_error"})        
+    }
+
+    async getAllMethods(req, res){
+        const methods = await Methods.findAndCountAll()
+        return res.json(methods)        
+    }
+
     async create(req, res){
         const {name, id, method, parameters_value} = req.params
         console.log(parameters_value)
         const {itog} = req.body
         const history = await History.create({itog:itog, zapros:name, userID:id})
-        Parameter.create({parameters:parameters_value, methodID:method, historyId: history.id})
+        let his_param = await Parameter.create({parameters:parameters_value, methodID:method, historyId: history.id})
         return res.json({"response":"no_error"})
-        
-        
     }
     async get(req, res){
         const {id} = req.params
@@ -23,9 +33,9 @@ class MainController {
             const result = []
             const parameter = []
             for (let i in history_user.rows){
-                const param = Parameter.findOne({where:{historyId:history_user.rows[i].id}})
+                const param = await Parameter.findOne({where:{historyId:history_user.rows[i].id}})
                 parameter.push(param)
-                const {dataValues} = Methods.findOne({where:{ ID:param.methodID}})
+                const {dataValues} = await Methods.findOne({where:{ ID:param.methodID}})
                 arr.push(dataValues)
             }
             //console.log(arr)
