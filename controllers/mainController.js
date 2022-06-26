@@ -16,6 +16,20 @@ class MainController {
         return res.json(methods)        
     }
 
+    async updateMethods(req, res){
+        const {id, name} = req.params
+        const {method} = req.body
+        const methods = await ( await (Methods.findOne({where: {ID: id}},
+            ))).update({name: name, method: method},)
+        return res.json(methods)        
+    }
+
+    async deleteMethods(req, res){
+        const {id} = req.params
+        const methods = await Methods.destroy({where:{ID: id}})
+        return res.json(methods)        
+    }
+
     async create(req, res){
         const {name, id, method, parameters_value} = req.params
         console.log(parameters_value)
