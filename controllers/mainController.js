@@ -31,12 +31,17 @@ class MainController {
     }
 
     async create(req, res){
-        const {name, id, method, parameters_value} = req.params
-        console.log(parameters_value)
-        const {itog} = req.body
-        const history = await History.create({itog:itog, zapros:name, userID:id})
-        let his_param = await Parameter.create({parameters:parameters_value, methodID:method, historyId: history.id})
-        return res.json({"response":"no_error"})
+        try{
+            const {name, id, method, parameters_value} = req.params
+            console.log(parameters_value)
+            const {itog} = req.body
+            const history = await History.create({itog:itog, zapros:name, userID:id})
+            let his_param = await Parameter.create({parameters:parameters_value, methodID:method, historyId: history.id})
+            return res.json({"response":"no_error"})
+        }catch (err){
+            console.log(err)
+        }
+       
     }
     async get(req, res){
         const {id} = req.params
