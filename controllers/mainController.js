@@ -27,16 +27,16 @@ class MainController {
     async get(req, res){
         const {id} = req.params
         const user = await User.findOne({where:{ user_id: id}})
-        const history_user = await History.findAndCountAll({where:{ userID: user.ID}})
+        const history_user = History.findAndCountAll({where:{ userID: user.ID}})
         console.log(history_user.rows)
         if(history_user.count!==0){
             const arr=[]
             const result = []
             const parameter = []
             for (let i in history_user.rows){
-                const param = await Parameter.findOne({where:{historyId:history_user.rows[i].id}})
+                const param = Parameter.findOne({where:{historyId:history_user.rows[i].id}})
                 parameter.push(param)
-                const {dataValues} = await Methods.findOne({where:{ ID:param.methodID}})
+                const {dataValues} = Methods.findOne({where:{ ID:param.methodID}})
                 arr.push(dataValues)
             }
             //console.log(arr)
