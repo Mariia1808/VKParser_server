@@ -40,6 +40,7 @@ class MainController {
             return res.json({"response":"no_error"})
         }catch (err){
             console.log(err)
+            return res.json({"response":err})
         }
        
     }
