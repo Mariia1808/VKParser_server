@@ -6,7 +6,7 @@ class MainController {
 
     async deleteHistory(req, res){
         //let i = await Parameter.truncate()
-        let methods = await History.query('TRUNCATE histories, parameters CASCADE')
+        let methods = await History.truncate()
         return res.json({"response":"no_error"})        
     }
 

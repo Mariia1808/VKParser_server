@@ -26,13 +26,13 @@ const Parameter = sequelize.define('parameter',{
     parameters: {type: DataTypes.STRING, allowNull: false},
 })
 
-User.hasMany(History)
+User.hasMany(History, {onDelete: 'cascade'})
 History.belongsTo(User)
 
-Methods.hasMany(Parameter)
+Methods.hasMany(Parameter, {onDelete: 'cascade'})
 Parameter.belongsTo(Methods)
 
-History.hasOne(Parameter)
+History.hasOne(Parameter, {onDelete: 'cascade'})
 Parameter.belongsTo(History)
 
 module.exports = {
