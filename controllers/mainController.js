@@ -64,7 +64,7 @@ class MainController {
 
     async delete(req, res){
         const {id} = req.params
-        const par = await Parameter.destroy({where:{historyId:id}})
+        //const par = await Parameter.destroy({where:{historyId:id}})
         const history = await History.destroy({where:{id: id}})
         return res.json(history)
     }
