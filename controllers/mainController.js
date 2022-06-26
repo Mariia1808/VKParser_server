@@ -4,6 +4,11 @@ const { History, User, Methods, Parameter } = require('../models/models');
 
 class MainController { 
 
+    async deleteHistory(req, res){
+        const methods = await History.truncate()
+        return res.json({"response":"no_error"})        
+    }
+
     async createMethods(req, res){
         const {name} = req.params
         const {method} = req.body
