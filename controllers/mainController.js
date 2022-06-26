@@ -12,7 +12,7 @@ class MainController {
     }
 
     async getAllMethods(req, res){
-        const methods = await Methods.findAndCountAll()
+        const methods = await Methods.findAndCountAll({order:[['ID', 'ASC']]},)
         return res.json(methods)        
     }
 
