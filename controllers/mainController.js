@@ -8,11 +8,9 @@ class MainController {
         console.log(parameters_value)
         const {itog} = req.body
         let history = null
-        history = await History.create({itog:itog, zapros:name, userID:id})
-        if (history!==null){
-            let his_param = await Parameter.create({parameters:parameters_value, methodID:method, historyId: history.id})
-            return res.json({"response":"no_error"})
-        }
+        history = await History.create({itog:itog, zapros:name, userID:id}).finally(()=>await Parameter.create({parameters:parameters_value, methodID:method, historyId: history.id}))
+        return res.json({"response":"no_error"})
+        
         
     }
     async get(req, res){
