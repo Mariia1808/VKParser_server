@@ -29,13 +29,13 @@ class MainController {
         //const user = await User.findOne({where:{ user_id: id}})
         let history_user = await History.findAndCountAll({where:{ userID: (await User.findOne({where:{ user_id: id}})).ID}})
         if(history_user.count!==0){
-            const arr=[]
-            const result = []
-            const parameter = []
+            let arr=[]
+            let result = []
+            let parameter = []
             for (let i in history_user.rows){
-                const param = Parameter.findOne({where:{historyId:history_user.rows[i].id}})
+                let param = Parameter.findOne({where:{historyId:history_user.rows[i].id}})
                 parameter.push(param)
-                const {dataValues} = Methods.findOne({where:{ ID:param.methodID}})
+                let {dataValues} = Methods.findOne({where:{ ID:param.methodID}})
                 arr.push(dataValues)
             }
             //console.log(arr)
