@@ -50,7 +50,7 @@ class MainController {
             for (let i in history_user.rows){
                 const param = await Parameter.findOne({where:{historyId:history_user.rows[i].id}})
                 parameter.push(param)
-                console.log(param.methodID)
+                console.log(param)
                 const {dataValues} = await Methods.findOne({where:{ ID:param.methodID}})
                 arr.push(dataValues)
             }
