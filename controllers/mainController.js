@@ -16,7 +16,7 @@ class MainController {
     async get(req, res){
         const {id} = req.params
         const user = await User.findOne({where:{ user_id: id}})
-        const history_user = History.findAndCountAll({where:{ userID: user.ID}})
+        const history_user = await History.findAndCountAll({where:{ userID: user.ID}})
         console.log(history_user.rows)
         if(history_user.count!==0){
             const arr=[]
