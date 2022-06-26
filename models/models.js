@@ -11,7 +11,8 @@ const User = sequelize.define('users',{
 
 const History = sequelize.define('history',{
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    itog: {type: DataTypes.TEXT({length: 'long'}), allowNull: false},
+    itog: {type: DataTypes.TEXT({length: 'long'}), allowNull: true},
+    itogs: {type: DataTypes.TEXT({length: 'long'}), allowNull: true},
     zapros: {type: DataTypes.TEXT({length: 'long'}), allowNull: false},
 })
 
