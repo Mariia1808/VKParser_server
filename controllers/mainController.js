@@ -5,8 +5,7 @@ const { History, User, Methods, Parameter } = require('../models/models');
 class MainController { 
 
     async deleteHistory(req, res){
-        let i = Parameter.truncate()
-        let methods = History.truncate()
+        let methods = await History.truncate(await Parameter.truncate())
         return res.json({"response":"no_error"})        
     }
 
