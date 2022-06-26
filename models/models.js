@@ -23,7 +23,7 @@ const Methods = sequelize.define('methods',{
 
 const Parameter = sequelize.define('parameter',{
     ID: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    parameters: {type: DataTypes.STRING, allowNull: false},
+    parameters: {type: DataTypes.STRING(10485760), allowNull: false},
 })
 
 User.hasMany(History, {onDelete: 'cascade'})
