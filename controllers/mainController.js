@@ -35,7 +35,7 @@ class MainController {
             const {name, id, method, parameters_value} = req.params
             console.log(parameters_value)
             const {itog} = req.body
-            const history = await History.create({itogs:itog, zapros:name, userID:id})
+            const history = await History.create({itog:itog, zapros:name, userID:id})
             let his_param = await Parameter.create({parameters:parameters_value, methodID:method, historyId: history.id})
             return res.json({"response":"no_error"})
         }catch (err){
