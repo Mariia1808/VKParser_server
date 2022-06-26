@@ -11,8 +11,8 @@ const User = sequelize.define('users',{
 
 const History = sequelize.define('history',{
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    itog: {type: DataTypes.STRING, length: 10485760, allowNull: false},
-    zapros: {type: DataTypes.STRING({length: 10485760}), allowNull: false},
+    itog: {type: DataTypes.MEDIUMTEXT, allowNull: false},
+    zapros: {type: DataTypes.STRING, allowNull: false},
 })
 
 const Methods = sequelize.define('methods',{
@@ -23,7 +23,7 @@ const Methods = sequelize.define('methods',{
 
 const Parameter = sequelize.define('parameter',{
     ID: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    parameters: {type: DataTypes.STRING({length: 10485760}), allowNull: false},
+    parameters: {type: DataTypes.STRING, allowNull: false},
 })
 
 User.hasMany(History, {onDelete: 'cascade'})
