@@ -1,3 +1,6 @@
+'use strict';
+
+const ms = require('ms');
 const Router = require('express')
 const groupsController = require('../controllers/groupsController')
 
