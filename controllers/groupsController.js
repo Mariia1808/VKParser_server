@@ -26,18 +26,19 @@ class GroupsController {
                     
                         arr.push(...data.response.items)
                     
-                // }else{
-                //     const {data} = await(await axios.post('https://api.vk.com/method/groups.getMembers?v=5.131&access_token='+token+'&count='+Number(kolvo)+'&offset='+Math.round(offset)+'&group_id='+group_id+'&sort=id_asc'+'&fields='+fields+i_filter))
-                //     if(data.response != undefined){
-                //             arr.push(...data.response.items)
-                //     }
+                }else{
+                    const {data} = await(await axios.post('https://api.vk.com/method/groups.getMembers?v=5.131&access_token='+token+'&count='+Number(kolvo)+'&offset='+Math.round(offset)+'&group_id='+group_id+'&sort=id_asc'+'&fields='+fields+i_filter))
+                    if(data.response != undefined){
+                        
+                            arr.push(...data.response.items)
+                    }
                 }
                 console.log(arr.length)
                 offset = offset+kolvo
                 kolvo = 1000
             }  
             //console.log(arr)
-            //console.log(res)
+            console.log(res)
             return res.json(arr)
         }else{
             let arr=[]
