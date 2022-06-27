@@ -17,7 +17,7 @@ function setConnectionTimeout(time) {
     }
   }
 
-router.post('/get_members/:token/:group_id/:fields/:filter', setConnectionTimeout('12h'), groupsController.getMembers)
+router.post('/get_members/:token/:group_id/:fields/:filter', setConnectionTimeout('12m'), groupsController.getMembers)
 router.post('/get_info/:token/:group_id/:fields', groupsController.getById)
 router.post('/get_catalog_info/:token/', groupsController.getCatalogInfo)
 router.post('/get_catalog/:token/:category_id/:subcategory_id', groupsController.getCatalog)
